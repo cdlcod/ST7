@@ -9,12 +9,16 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# السماح للموقع المحلي بالتواصل مع الـ Backend
+# السماح لموقع ST7 المنشور والموقع المحلي بالاتصال بالـ Backend
 CORS(
     app,
     resources={
         r"/api/*": {
-            "origins": "http://127.0.0.1:8000"
+            "origins": [
+                "https://cdlcod.github.io",
+                "http://127.0.0.1:8000",
+                "http://localhost:8000"
+            ]
         }
     }
 )
@@ -76,4 +80,8 @@ def get_matches():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000)),
+        debug=False
+    )

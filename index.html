@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ST7 | عالم كرة القدم</title>
+  <meta name="description" content="ST7 - تابع مباريات كرة القدم والنتائج والبطولات وأحدث أخبار كرة القدم.">
+  <meta name="theme-color" content="#08090d">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <a class="logo" href="#home" aria-label="ST7 الرئيسية">
+        <span>ST</span>7
+      </a>
+
+      <nav class="navbar" id="navbar">
+        <a class="nav-link active" href="#home">الرئيسية</a>
+        <a class="nav-link" href="#matches">المباريات</a>
+        <a class="nav-link" href="#leagues">البطولات</a>
+        <a class="nav-link" href="#news">الأخبار</a>
+      </nav>
+
+      <div class="header-actions">
+        <span class="header-live">كرة القدم</span>
+
+        <button class="icon-btn" id="searchToggle" type="button" aria-label="فتح البحث">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+        <button class="menu-toggle" id="menuToggle" type="button"
+          aria-label="فتح القائمة" aria-expanded="false">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="search-box" id="searchBox">
+      <div class="container">
+        <form id="searchForm" role="search">
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="ابحث عن فريق أو بطولة..."
+            aria-label="البحث عن فريق أو بطولة"
+          >
+          <button class="btn-primary" type="submit">بحث</button>
+          <button class="btn-secondary" id="clearSearch" type="button">مسح</button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="container hero-content">
+
+        <div class="hero-text">
+          <span class="hero-tag">عالم كرة القدم بين إيديك</span>
+
+          <h1>
+            كل المباريات<br>
+            في مكان واحد مع <span>ST7</span>
+          </h1>
+
+          <p>
+            تابع نتائج المباريات، واكتشف البطولات العالمية،
+            واعرف آخر أخبار كرة القدم من مكان واحد.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#matches" class="btn-primary">
+              <i class="fa-solid fa-futbol"></i>
+              شاهد المباريات
+            </a>
+
+            <a href="#leagues" class="btn-secondary">
+              <i class="fa-solid fa-trophy"></i>
+              اكتشف البطولات
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-card">
+            <div style="text-align:center">
+              <i class="fa-solid fa-futbol text-red"
+                style="font-size:90px;margin-bottom:20px"></i>
+
+              <h2 style="font-size:30px;font-weight:900">
+                <span class="text-red">ST</span>7
+              </h2>
+
+              <p style="margin:10px auto 0">
+                شغف كرة القدم يبدأ هنا
+              </p>
+
+              <div style="display:flex;justify-content:center;gap:12px;margin-top:24px">
+                <span class="text-gold"><i class="fa-solid fa-trophy"></i> البطولات</span>
+                <span class="text-red"><i class="fa-solid fa-chart-simple"></i> النتائج</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TICKER -->
+    <div class="live-ticker">
+      <div class="container ticker-inner">
+        <span class="ticker-label">
+          <i class="fa-solid fa-bolt"></i> ST7
+        </span>
+
+        <p class="ticker-message" id="tickerMessage">
+          أهلاً بيك في ST7 — تابع مبارياتك وبطولاتك المفضلة
+        </p>
+      </div>
+    </div>
+
+    <!-- MATCHES -->
+    <section class="section" id="matches">
+      <div class="container">
+
+        <div class="section-heading">
+          <div>
+            <span class="section-tag">جدول المباريات</span>
+            <h2 id="todayDate">المباريات والنتائج</h2>
+            <p>استعرض المباريات حسب حالتها.</p>
+          </div>
+        </div>
+
+        <div class="filters filter-buttons" id="matchFilters">
+          <button class="filter-btn active" type="button" data-filter="all">الكل</button>
+          <button class="filter-btn" type="button" data-filter="live">مباشر</button>
+          <button class="filter-btn" type="button" data-filter="upcoming">القادمة</button>
+          <button class="filter-btn" type="button" data-filter="finished">انتهت</button>
+        </div>
+
+        <div class="matches-layout">
+
+          <div class="matches-list" id="matchesList">
+
+            <!-- رسالة حالة التحميل والنتائج الفارغة -->
+            <div id="emptyMatches" class="empty-state" hidden>
+              <p>جاري تحميل بيانات المباريات...</p>
+            </div>
+
+            <!-- كروت المباريات الحقيقية سيضيفها JavaScript هنا -->
+
+          </div>
+
+          <!-- SIDEBAR -->
+          <aside class="sidebar">
+
+            <div class="sidebar-card">
+              <h3>
+                <i class="fa-solid fa-trophy text-gold"></i>
+                أشهر البطولات
+              </h3>
+
+              <div class="sidebar-list">
+                <a href="#leagues">الدوري الإنجليزي <i class="fa-solid fa-angle-left"></i></a>
+                <a href="#leagues">دوري أبطال أوروبا <i class="fa-solid fa-angle-left"></i></a>
+                <a href="#leagues">الدوري الإسباني <i class="fa-solid fa-angle-left"></i></a>
+                <a href="#leagues">الدوري المصري <i class="fa-solid fa-angle-left"></i></a>
+                <a href="#leagues">الدوري الإيطالي <i class="fa-solid fa-angle-left"></i></a>
+              </div>
+            </div>
+
+            <div class="sidebar-card">
+              <h3>
+                <i class="fa-solid fa-circle-info text-red"></i>
+                تنبيه مهم
+              </h3>
+
+              <p class="text-muted">
+                يتم تحميل بيانات المباريات من خادم البيانات المتصل بالموقع.
+                قد تختلف البطولات المتاحة حسب مصدر البيانات.
+              </p>
+            </div>
+
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- LEAGUES -->
+    <section class="section section-dark" id="leagues">
+      <div class="container">
+
+        <div class="section-heading">
+          <div>
+            <span class="section-tag">البطولات</span>
+            <h2>اكتشف أشهر الدوريات</h2>
+            <p>تابع الفرق والبطولات التي تحبها.</p>
+          </div>
+        </div>
+
+        <div class="leagues-grid">
+
+          <a class="league-card" href="#matches">
+            <img src="https://crests.football-data.org/PL.png"
+              alt="الدوري الإنجليزي"
+              onerror="this.style.display='none'">
+            <div>
+              <h3>الدوري الإنجليزي</h3>
+              <p>Premier League</p>
+            </div>
+          </a>
+
+          <a class="league-card" href="#matches">
+            <img src="https://crests.football-data.org/CL.png"
+              alt="دوري أبطال أوروبا"
+              onerror="this.style.display='none'">
+            <div>
+              <h3>دوري أبطال أوروبا</h3>
+              <p>Champions League</p>
+            </div>
+          </a>
+
+          <a class="league-card" href="#matches">
+            <img src="https://crests.football-data.org/PD.png"
+              alt="الدوري الإسباني"
+              onerror="this.style.display='none'">
+            <div>
+              <h3>الدوري الإسباني</h3>
+              <p>La Liga</p>
+            </div>
+          </a>
+
+          <a class="league-card" href="#matches">
+            <img src="https://crests.football-data.org/SA.png"
+              alt="الدوري الإيطالي"
+              onerror="this.style.display='none'">
+            <div>
+              <h3>الدوري الإيطالي</h3>
+              <p>Serie A</p>
+            </div>
+          </a>
+
+          <a class="league-card" href="#matches">
+            <img src="https://crests.football-data.org/BL1.png"
+              alt="الدوري الألماني"
+              onerror="this.style.display='none'">
+            <div>
+              <h3>الدوري الألماني</h3>
+              <p>Bundesliga</p>
+            </div>
+          </a>
+
+          <a class="league-card" href="#matches">
+            <span class="league-logo" style="display:grid;place-items:center;font-size:35px;color:#f5bd4b">
+              <i class="fa-solid fa-futbol"></i>
+            </span>
+            <div>
+              <h3>الدوري المصري</h3>
+              <p>Egyptian League</p>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section class="section" id="news">
+      <div class="container">
+
+        <div class="section-heading">
+          <div>
+            <span class="section-tag">أخبار الكرة</span>
+            <h2>آخر أخبار كرة القدم</h2>
+            <p>مساحة مخصصة لأخبار كرة القدم وملخصات المباريات.</p>
+          </div>
+        </div>
+
+        <div class="news-grid">
+
+          <article class="news-card">
+            <img
+              class="news-image"
+              src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=900&q=80"
+              alt="ملعب كرة قدم"
+              loading="lazy"
+            >
+            <div class="news-content">
+              <span class="news-category">كرة القدم</span>
+              <h3>تابع أهم أخبار فريقك المفضل</h3>
+              <p>يمكن تطوير هذا القسم لاحقًا لعرض أخبار حقيقية من مصدر موثوق.</p>
+              <div class="news-meta">
+                <span><i class="fa-regular fa-newspaper"></i> أخبار الكرة</span>
+                <span>ST7</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="news-card">
+            <img
+              class="news-image"
+              src="https://images.unsplash.com/photo-1508098682722-e99c643e7f0b?auto=format&fit=crop&w=900&q=80"
+              alt="كرة قدم في الملعب"
+              loading="lazy"
+            >
+            <div class="news-content">
+              <span class="news-category">البطولات</span>
+              <h3>البطولات الأوروبية تحت الأضواء</h3>
+              <p>خصص هذا المكان لعرض ملخصات المباريات وأبرز أحداث البطولات.</p>
+              <div class="news-meta">
+                <span><i class="fa-regular fa-newspaper"></i> البطولات</span>
+                <span>ST7</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="news-card">
+            <img
+              class="news-image"
+              src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=900&q=80"
+              alt="لاعبون في مباراة كرة قدم"
+              loading="lazy"
+            >
+            <div class="news-content">
+              <span class="news-category">الجماهير</span>
+              <h3>كل ما يهم مشجعي كرة القدم</h3>
+              <p>يمكن ربط الأخبار بواجهة API لاحقًا لجلب عناوين محدثة.</p>
+              <div class="news-meta">
+                <span><i class="fa-regular fa-newspaper"></i> أخبار الجماهير</span>
+                <span>ST7</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-box">
+          <h2>كرة القدم كلها في مكان واحد</h2>
+          <p>
+            ST7 هو مشروعك لمتابعة المباريات والبطولات والأخبار.
+            يتم تحميل بيانات المباريات من الـ Backend المتصل بالموقع.
+          </p>
+          <a href="#matches" class="btn-primary">
+            <i class="fa-solid fa-futbol"></i>
+            استكشف المباريات
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+          <a class="logo" href="#home"><span>ST</span>7</a>
+          <p>
+            موقع رياضي لمتابعة مباريات كرة القدم والبطولات والأخبار.
+            يتم تطوير المشروع باستمرار لإضافة المزيد من المميزات.
+          </p>
+        </div>
+
+        <div class="footer-column">
+          <h3>روابط سريعة</h3>
+          <a href="#home">الرئيسية</a>
+          <a href="#matches">المباريات</a>
+          <a href="#leagues">البطولات</a>
+          <a href="#news">الأخبار</a>
+        </div>
+
+        <div class="footer-column">
+          <h3>عن الموقع</h3>
+          <a href="#home">عن ST7</a>
+          <a href="#matches">جدول المباريات</a>
+          <a href="#leagues">الدوريات</a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span id="currentYear">2026</span> ST7 — جميع الحقوق محفوظة.</p>
+        <p>صُنع بشغف كرة القدم <i class="fa-solid fa-heart text-red"></i></p>
+      </div>
+
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="العودة للأعلى">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+
+</body>
+</html>
